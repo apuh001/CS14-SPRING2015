@@ -22,6 +22,21 @@
 
 using namespace std;
 
+int main()
+{
+    cout << "Testing elementSwap()" << endl << endl;
+    List<int> myList;
+    //Push back several ints. and Print.
+    for(unsigned i = 0; i < 6; i++)
+        myList.push(i);
+    cout << "myList contains: " << endl;
+    myList.display();
+    cout << endl;
+    
+    
+    return 0;
+}
+
 template <typename T>
 
 List<T>::List()
