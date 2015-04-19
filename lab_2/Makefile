@@ -17,8 +17,8 @@
 
 all: a.out run
 
-a.out: main.cc lab2.h lab2.cpp
-	g++ -std=c++11 -Wall -Werror -pedantic main.cc lab2.h lab2.cpp
+a.out: lab2.h lab2.cpp
+	g++ -std=c++11 -Wall -Werror -pedantic lab2.h lab2.cpp
 
 run: a.out
 	./a.out
