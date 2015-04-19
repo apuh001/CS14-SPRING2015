@@ -200,15 +200,15 @@ void List<T>::display()
 
 template <typename T>
 
-List<T> elementSwap(int pos)
+List<T> List<T>::elementSwap(int pos)
 {
     int posCount = -1;
-    Node* pos1Node = 0;
-    Node* posN1Node = 0;
-    Node* tempPrevious = 0;
+    Node<T>* pos1Node = 0;
+    Node<T>* posN1Node = 0;
+    Node<T>* tempPrevious = 0;
     
     //If the next element is 0, then return original list w/o swap
-    for (curr = head; curr->next !=0; curr = curr->next)
+    for (Node<T>* curr = this->head; curr->next !=0; curr = curr->next)
     {
         posCount++;
         
@@ -220,12 +220,12 @@ List<T> elementSwap(int pos)
         {
             pos1Node = curr;
             posN1Node = curr->next;
-            Node* temp = posN1Node->next;
+            Node<T>* temp = posN1Node->next;
             
             if(pos1Node == head)
             {
                 pos1Node->next = temp;
-                posN1Node->next = post1Node;
+                posN1Node->next = pos1Node;
                 
                 head = posN1Node;
                 
@@ -234,7 +234,7 @@ List<T> elementSwap(int pos)
             if(posN1Node == tail)
             {
                 pos1Node->next = temp;
-                posN1Node->next = post1Node;
+                posN1Node->next = pos1Node;
                 tempPrevious->next = posN1Node;
                 
                 tail = pos1Node;
@@ -244,7 +244,7 @@ List<T> elementSwap(int pos)
             
             //Swaps occuring inside not head or tail.
             pos1Node->next = temp;
-            posN1Node->next = post1Node;
+            posN1Node->next = pos1Node;
             tempPrevious->next = posN1Node;
             
             return *this;
@@ -256,20 +256,24 @@ List<T> elementSwap(int pos)
     return *this;
 }
 
-int primeCount(forward_list<int> 1st);
+int primeCount(forward_list<int> lst)
 {
     //Base case
-    if(1st.empty())
+    if(lst.empty())
         return 0;
     
     //If 1st element tested to be prime. Then recursively call whilst popping
     //first element off.
-    if(isPrime(1st.front()))
-        return 1 + primeCount(1st.pop_front());
+    if(isPrime(lst.front()))
+    {
+        lst.pop_front();
+        return 1 + primeCount(lst);
+    }
     
     //Implies 1st element is not prime. Then recursively call whilst popping
     //first element off.
-    return 0 + primeCount(1st.pop_front());
+    lst.pop_front();
+    return 0 + primeCount(lst);
 }
 
 bool isPrime(int i)
@@ -284,25 +288,26 @@ bool isPrime(int i)
     return false;
 }
 
+template <typename T>
+
 //Rule: Traverse L once. Copy L into P in reverse order.
 //NEEDS WORK
 void listCopy(forward_list<T> L, forward_list<T> P)
 {
-    forward_list<T>::iterator fwdListIt = L.end();
-    forward_list<T>::iterator PIt = P.end();
-    
-    //Points iterator to last element.
-    PIt--;
-    fwdListIt--;
+    //Gets an iterator pointing to end() - 1
+    auto iter = P.cbegin();
+    for(; iter + 1 != P.cend(); iter++);
     
     while(!(L.empty()))
     {
-        P.insert_after(P.end, L.front());
+        P.insert_after(iter, L.front());
         L.pop_front();
+        iter++; //Advances iterator.
     }
-    
     return;
 }
+
+template <typename T>
 
 void printLots(forward_list<T> L, forward_list<int> P)
 {
@@ -313,7 +318,7 @@ void printLots(forward_list<T> L, forward_list<int> P)
         return;
     
     //L is already empty, but P is not empty.
-    if(!(P.empty()) && L.empty()
+    if(!(P.empty()) && L.empty())
     {
         cout << "Error: P contains out of boundary positions in L" << endl;
         return;
