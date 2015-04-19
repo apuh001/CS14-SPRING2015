@@ -49,15 +49,17 @@ class List
         void push(T value);
         void rotate(int k);
         void display();
-        //List& operator+(List& head2);
+        List<T> elementSwap(int pos);
 };
 
-List<T> elementSwap(int pos);
-
-int primeCount(forward_list<int> 1st);
+int primeCount(forward_list<int> lst);
 bool isPrime(int i);
 
-void listCopy(forward_list<T> L, forward_list&<T> P);
+template <typename T>
+
+void listCopy(forward_list <T> L, forward_list <T> &P);
+
+template <typename T>
 
 void printLots(forward_list<T> L, forward_list<int> P);
 
