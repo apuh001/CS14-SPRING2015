@@ -1,11 +1,16 @@
-I have updated to your last minute changes in the specifications, but please
-let me know if others are having difficulty with labs. I believe this is the
-reason for the changes, but I was able to make it work with one of the earlier 
-versions of the lab.
+I was unclear on whether we needed a main.cpp to contain our main function.
+I asked on piazza but no one helped me. According to the specs, we only needed
+lab2.cpp and lab2.h so my main() function is contained inside lab2.cpp.
 
-Also regarding the tgz file, our SI leaders advised us not to include them
-since they are working it out with you, but I have included it anyways. Please
-be clear on this in the future.
+Also, I would kindly suggest not changing the specifications so late on the
+due date because I spent quite a lot of time over the weekend writing the lab
+to older specifications and had to modify it many times. I understand many of
+the specs were simplified but I overcame the challenge and feel like I have
+thrown away much of my time deleting all the hard work I did to make it work
+in conjunction to the new specs. If you would like, I will be glad to point
+others in the right direction on piazza. I respond to questions frequently
+but it becomes difficult to help others when I constantly have to change
+my program.
 
 Kind Regards,
 Alex Puh
