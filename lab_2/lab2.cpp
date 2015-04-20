@@ -22,21 +22,6 @@
 
 using namespace std;
 
-int main()
-{
-    cout << "Testing elementSwap()" << endl << endl;
-    List<int> myList;
-    //Push back several ints. and Print.
-    for(unsigned i = 0; i < 6; i++)
-        myList.push(i);
-    cout << "myList contains: " << endl;
-    myList.display();
-    cout << endl;
-    
-    
-    return 0;
-}
-
 template <typename T>
 
 List<T>::List()
@@ -215,8 +200,17 @@ void List<T>::display()
 
 template <typename T>
 
-List<T> List<T>::elementSwap(int pos)
+//If position is out of range, nothing is changed.
+void List<T>::elementSwap(int pos)
 {
+    if(this->head == 0)
+    {
+        //No swap occured.
+        cout << "No swap was made because invalid position "; 
+        cout << pos << " was passed." << endl;
+        return;
+    }
+    
     int posCount = -1;
     Node<T>* pos1Node = 0;
     Node<T>* posN1Node = 0;
@@ -244,7 +238,7 @@ List<T> List<T>::elementSwap(int pos)
                 
                 head = posN1Node;
                 
-                return *this;
+                return;
             }
             if(posN1Node == tail)
             {
@@ -254,7 +248,7 @@ List<T> List<T>::elementSwap(int pos)
                 
                 tail = pos1Node;
                 
-                return *this;
+                return;
             }
             
             //Swaps occuring inside not head or tail.
@@ -262,14 +256,18 @@ List<T> List<T>::elementSwap(int pos)
             posN1Node->next = pos1Node;
             tempPrevious->next = posN1Node;
             
-            return *this;
+            return;
         }
         
     }
     
     //No swap occured.
-    return *this;
+    cout << "No swap was made because invalid position "; 
+    cout << pos << " was passed." << endl;
+  
+    return;
 }
+
 
 int primeCount(forward_list<int> lst)
 {
@@ -293,12 +291,16 @@ int primeCount(forward_list<int> lst)
 
 bool isPrime(int i)
 {
+    //These values never prime.
+    if(i <= 0)
+        return false;
+        
     //Basic single digit prime numbers
     if(i == 2 || i == 3 || i == 5 || i == 7)
         return true;
     
     //Checks if remainder by modding i with the single digit primes
-    if(i % 2 != 0 || i % 3 != 0 || i % 5 != 0|| i % 7 != 0)
+    if(i % 2 != 0 && i % 3 != 0 && i % 5 != 0 && i % 7 != 0)
         return true;
     return false;
 }
