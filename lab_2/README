@@ -1,0 +1,17 @@
+This version of the lab is loyal to the previous specifications where
+the List class was seperated between lab2.h and lab2.cpp. I'd appreciate it
+if you could overlook the fact that I did not merge the List into a single
+lab2.h class as the last minute updated lab2 specs mentioned. I understand
+that they were changed because many people found strange messages when 
+compiling, but I was able to work through that although it was not an easy 
+feat. 
+
+As such, main.cpp will need to #include both lab2.cpp and lab2.h because
+I implemented it as the original lab specs said: to split the class into
+two files even though we were implementing templates. In the future, you can
+encourage others to ask questions if they are having difficulty getting it
+to compile and I and others who were able to make it work can point them into
+the right direction.
+
+Kind Regards,
+Alex Puh
