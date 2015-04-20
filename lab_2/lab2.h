@@ -49,7 +49,7 @@ class List
         void push(T value);
         void rotate(int k);
         void display();
-        List<T> elementSwap(int pos);
+        void elementSwap(int pos);
 };
 
 int primeCount(forward_list<int> lst);
