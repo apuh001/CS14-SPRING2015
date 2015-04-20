@@ -17,7 +17,7 @@
 
 all: a.out run
 
-a.out: main.cpp 
+a.out: main.cpp
 	g++ -std=c++11 -Wall -Werror -pedantic main.cpp 
 
 run: a.out
