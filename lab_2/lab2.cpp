@@ -309,17 +309,41 @@ template <typename T>
 
 //Rule: Traverse L once. Copy L into P in reverse order.
 //NEEDS WORK
-void listCopy(forward_list<T> L, forward_list<T> P)
+void listCopy(forward_list<T> L, forward_list<T> &P)
 {
-    //Gets an iterator pointing to end() - 1
-    auto iter = P.cbegin();
-    for(; iter + 1 != P.cend(); iter++);
+    //If L is empty or both are, nothing to do. 
+    if(L.empty() || (L.empty() && P.empty()))
+        return;
     
-    while(!(L.empty()))
+    //If just P is empty, all we do is push L's elements in reverse order.
+    if(P.empty())
     {
-        P.insert_after(iter, L.front());
-        L.pop_front();
-        iter++; //Advances iterator.
+        while(!(L.empty()))
+        {
+            P.insert_after(P.cbefore_begin(), L.front());
+            L.pop_front();
+        }
+    }
+    else
+    {
+        //Gets an iterator pointing to end() - 1
+        auto iter = P.cbegin();
+        //oneBehind will be pointing to the space BEFORE the mystical end().
+        //This ensures insert_after works without segfaulting. 
+        auto oneBehind = P.cbegin();
+        for(; iter != P.cend(); iter++)
+        {
+            if(iter != P.cbegin())
+                oneBehind++;
+        }
+    
+        //Insert the front element into the space next to the last element of
+        //forward_list P.
+        while(!(L.empty()))
+        {
+            P.insert_after(oneBehind, L.front());
+            L.pop_front();
+        }
     }
     return;
 }
@@ -328,8 +352,6 @@ template <typename T>
 
 void printLots(forward_list<T> L, forward_list<int> P)
 {
-    int counter = -1;
-
     //Both lists empty.
     if(P.empty() && L.empty())
         return;
@@ -337,10 +359,13 @@ void printLots(forward_list<T> L, forward_list<int> P)
     //L is already empty, but P is not empty.
     if(!(P.empty()) && L.empty())
     {
-        cout << "Error: P contains out of boundary positions in L" << endl;
+        cout << endl;
+        cout << "Error: P contains out of boundary positions in L." << endl;
         return;
     }    
     
+    int counter = -1;
+        
     //P and L already have elements. Or if P had no elements to begin with
     //and L has elements, nothing will be printed.
     while(!(P.empty()))
@@ -353,16 +378,17 @@ void printLots(forward_list<T> L, forward_list<int> P)
             //Gets rid of first element to advance front() to next.
             P.pop_front();
             //DO WE NEED BETTER FORMATTING?
-            cout << L.front() << endl;
-            //Gets rid of first element to advance front() to next.
-            P.pop_front();
+            cout << L.front() << " ";
         }
+        
+        L.pop_front();
         
         //If P is not empty, while L is already empty, we have out of range
         //elements!
         if(!(P.empty()) && L.empty())
         {
-            cout << "Error: P contains out of boundary positions in L" << endl;
+            cout << endl;
+            cout << "Error: P contains out of boundary positions in L." << endl;
             return;
         }
     }
