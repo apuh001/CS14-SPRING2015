@@ -1,3 +1,19 @@
+// ##  =============== BEGIN ASSESSMENT HEADER ================
+// ### @file Lab2/main.cpp
+// ### @brief Lab 2 Spring 2015
+// ###
+// ### @author Alexander Puh [apuh001@ucr.edu]
+// ### @date 4/18/2015
+// ### @SID: 861162817
+// ###
+// ### @par Enrollment Notes 
+// ###     Lecture Section: 001
+// ### @par
+// ###     Lab Section: 022
+// ### @par
+// ###     TA: Mandar
+// ##  ================== END ASSESSMENT HEADER ===============
+
 #include "lab2.h"
 #include "lab2.cpp"
 #include <cstdlib>
@@ -170,6 +186,186 @@ int main()
     cout << "listCopy() TESTS" << endl;
     cout << "==================================" << endl << endl;
     
+    forward_list<char> letters;
+    forward_list<char> ints;
+    letters.push_front('d');
+    letters.push_front('c');
+    letters.push_front('b');
+    letters.push_front('a');
+    ints.push_front('4');
+    ints.push_front('3');
+    ints.push_front('2');
+    ints.push_front('1');
+    cout << endl;
+    
+    cout << "forward_list letters contains (a,b,c,d)";
+    cout << " and ints contains (1,2,3,4)" << endl;
+    cout << "After using listCopy(ints, letters)..." << endl;
+    listCopy(ints, letters);
+    cout << endl;
+    cout << "ints now contains: " << endl;
+    while(!ints.empty())
+    {
+        cout << ints.front() << " ";
+        ints.pop_front();
+    }
+    cout << endl;
+    cout << "letters now contains: " << endl;
+    while(!letters.empty())
+    {
+        cout << letters.front()  << " ";
+        letters.pop_front();
+    }
+    cout << endl << endl;
+    
+    cout << "Testing with empty lists. listCopy(empty1,empty2)" << endl;
+    forward_list<int> empty1;
+    forward_list<int> empty2;
+    listCopy(empty1,empty2);
+    cout << "empty2 now contains: " << endl;
+    if(empty2.empty())
+        cout << "[No elements]" << endl;
+    cout << "empty1 now contains: " << endl;
+    if(empty1.empty())
+        cout << "[No elements]" << endl;
+    cout << endl;
+    
+    cout << "Testing with empty1 and nums-> (1, 2, 3, 4, 5, 6, 7, 8)" << endl;
+    cout << "listCopy(empty1,nums)" << endl;
+    forward_list<int> nums;
+    for(unsigned x = 9; x > 0; x--)
+        nums.push_front(x);
+    listCopy(empty1,nums);
+    cout << "empty1 now contains: " << endl;
+    if(empty1.empty())
+        cout << "[No elements]" << endl;
+    cout << "nums now contains: " << endl;
+    while(!nums.empty())
+    {
+        cout << nums.front()  << " ";
+        nums.pop_front();
+    }
+    cout << endl << endl;
+    
+    cout << "Testing with empty1 and nums-> (1, 2, 3, 4, 5, 6, 7, 8)" << endl;
+    cout << "listCopy(nums,empty1) <--- notice flipped from last" << endl;
+    for(unsigned x = 9; x > 0; x--)
+        nums.push_front(x);
+    listCopy(nums, empty1);
+    cout << "empty1 now contains: " << endl;
+    if(empty1.empty())
+        cout << "[No elements]" << endl;
+    else
+    {
+        while(!empty1.empty())
+        {
+            cout << empty1.front()  << " ";
+            empty1.pop_front();
+        }
+    }
+    cout << endl;
+    cout << "nums now contains: " << endl;
+    while(!nums.empty())
+    {
+        cout << nums.front()  << " ";
+        nums.pop_front();
+    }
+    cout << endl << endl;
+    
+    cout << "==================================" << endl;
+    cout << "printLots() TESTS" << endl;
+    cout << "==================================" << endl << endl;
+    
+    forward_list<char> charList;
+    forward_list<int> indexList;
+    indexList.push_front(5);
+    indexList.push_front(3);
+    indexList.push_front(1);
+    indexList.push_front(0);
+    charList.push_front('f');
+    charList.push_front('e');
+    charList.push_front('d');
+    charList.push_front('c');
+    charList.push_front('b');
+    charList.push_front('a');
+    
+    cout << endl;
+    cout << "Testing indexList(0, 1, 3, 5) with charList(a,b,c,d,e,f)" << endl;
+    cout << "Expected: a b d f" << endl;
+    cout << "Result: ";
+    printLots(charList, indexList);
+    cout << endl << endl;
+    
+    forward_list<int> index2List;
+    index2List.push_front(8);
+    index2List.push_front(0);
+    cout << "Testing index2List(0, 8) with charList(a,b,c,d,e,f)" << endl;
+    cout << "Expected: a [error message]" << endl;
+    cout << "Result: ";
+    printLots(charList, index2List);
+    cout << endl << endl;
+    
+    index2List.clear();
+    cout << "Testing index2List([empty]) with charList(a,b,c,d,e,f)" << endl;
+    cout << "Expected: [nothing printed]" << endl;
+    cout << "Result: ";
+    printLots(charList, index2List);
+    cout << endl << endl;
+    
+    index2List.clear();
+    charList.clear();
+    cout << "Testing index2List([empty]) with charList([empty])" << endl;
+    cout << "Expected: [nothing printed]" << endl;
+    cout << "Result: ";
+    printLots(charList, index2List);
+    cout << endl << endl;
+    
+    cout << "Testing indexList(0, 1, 3, 5) with charList([empty])" << endl;
+    cout << "Expected: [error message]" << endl;
+    cout << "Result: ";
+    printLots(charList, indexList);
+    cout << endl << endl;
+    
+    indexList.push_front(-1);
+    cout << "Testing indexList(-1) with charList([empty])" << endl;
+    cout << "Expected: [error message]" << endl;
+    cout << "Result: ";
+    printLots(charList, indexList);
+    cout << endl << endl;
+    
+    charList.push_front(-2);
+    charList.push_front(-1);
+    cout << "Testing indexList(-1) with charList(a, b)" << endl;
+    cout << "Expected: [error message]" << endl;
+    cout << "Result: ";
+    printLots(charList, indexList);
+    cout << endl << endl;
+    
+    indexList.clear();
+    for(int n = 5; n >= 0; n--)
+        indexList.push_front(n);
+    
+    charList.clear();
+    charList.push_front('z');
+    charList.push_front('y');
+    charList.push_front('x');
+    charList.push_front('c');
+    charList.push_front('b');
+    charList.push_front('a');
+    cout << "Testing indexList(0, 1, 2, 3, 4, 5)";
+    cout << " with charList(a, b, c, x, y, z)" << endl;
+    cout << "Expected: a b c x y z" << endl;
+    cout << "Result: ";
+    printLots(charList, indexList);
+    cout << endl << endl;
+    
+    charList.push_front('z');
+    cout << "Testing indexList(0, 1, 2, 3, 4, 5)";
+    cout << "with charList(z ,a, b, c, x, y, z)" << endl;
+    cout << "Expected: z a b c x y " << endl;
+    cout << "Result: ";
+    printLots(charList, indexList);
+    cout << endl << endl;
     
     return 0;
 }
