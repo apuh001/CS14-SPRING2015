@@ -14,7 +14,6 @@
 ///     TA: Mandar
 //  ================== END ASSESSMENT HEADER ===============
 
-#include "lab2.h"
 #include <cstdlib>
 #include <forward_list>
 #include <iostream>
@@ -22,252 +21,21 @@
 
 using namespace std;
 
-template <typename T>
-
-List<T>::List()
+bool isPrime(int i)
 {
-    head = 0;
-    tail = 0;
-}
-
-template <typename T>
-
-List<T>::List(const T& str)
-{
-    head = new Node<T>(str);
-    tail = head;
-    tail->next = 0;
-    head->next = 0;
-}
-
-template <typename T>
-
-List<T>::~List()
-{
-    while(head != 0)
-    {
-        pop_front();
-    }
-}
-
-template <typename T>
-
-void List<T>::pop_front()
-{
-    //If it stores 0, we can't delete later. This condition helps.
-    if(head == 0)
-        return;
+    //These values never prime.
+    if(i <= 0)
+        return false;
         
-    Node<T>* temp = head;
-    head = head->next;
-    delete temp;
-    temp = 0;
+    //Basic single digit prime numbers
+    if(i == 2 || i == 3 || i == 5 || i == 7)
+        return true;
     
-    if (head == 0)
-        tail = 0;
+    //Checks if remainder by modding i with the single digit primes
+    if(i % 2 != 0 && i % 3 != 0 && i % 5 != 0 && i % 7 != 0)
+        return true;
+    return false;
 }
-    
-template <typename T>
-
-void List<T>::push_front(T value)
-{
-    if(head == 0)
-    {
-        head = new Node<T>(value);
-        tail = head;
-        
-        return;
-    }
-
-    Node<T>* oldHead = head;
-    Node<T>* newHead = new Node<T>(value);
-    head = newHead;
-    head->next = oldHead;
-    newHead = 0;
-    oldHead = 0;
-    
-    Node<T>* curr = head;
-    while (curr != 0)
-    {
-        if (curr->next == 0)
-            tail = curr;
-            
-        curr = curr->next;
-    }
-}
-
-template <typename T>
-
-void List<T>::push(T value)
-{
-    if(head == 0)
-    {
-        head = new Node<T>(value);
-        tail = head;
-        
-        return;
-    }
-
-    Node<T>* temp = tail;
-    tail = new Node<T>(value);
-    tail->next = 0;
-    
-    temp->next = tail;
-    temp = 0;
-    
-    return;
-}
-
-template <typename T>
-
-void List<T>::rotate(int k)
-{
-    //Empty lists
-    if(head == 0)
-    {
-        //cout << "empty list" << endl;
-        return;
-    }
-        
-    //Border case k = 0 or less
-    //No rotation should occur if k refers to first
-    //position 0.
-    if(k <= 0)
-    {
-        //cout << "index too small" << endl;
-        return;
-    }
-    
-    //Find the kth Node.
-    int indexCount = -1;
-    Node<T>* kthNode = NULL;
-    Node<T>* kthPrevNode = NULL;
-    Node<T>* curr = head;
-    for(; curr != 0; curr = curr->next)
-    {
-        //cout << "index count: " << indexCount << endl;
-        indexCount++;
-        
-        if(indexCount == (k - 1))
-            kthPrevNode = curr;
-            
-        if(indexCount == k)
-            kthNode = curr;
-    }
-    
-    //kthNode hasn't changed. k was too large.
-    if(kthNode == NULL)
-    {
-        //cout << "too large?" << endl;
-        return;
-    }
-    
-    //Proceed to rotate.
-    //First check for a List if k is tail
-    if(kthNode->next == 0)
-    {
-        //cout << "went into tail check!" << endl;
-        kthNode->next = head;
-        head = kthNode;
-        tail = kthPrevNode;
-        kthPrevNode->next = 0;
-        
-        return;
-    }
-    
-    //cout << "last check!" << endl;
-    //This should handle correctly as kthNode is not tail.
-    //Fast reassignment of next and new head and tail values.
-    tail->next = head;
-    head = kthNode;
-    tail = kthPrevNode;
-    tail->next = 0;
-    
-    return;
-}
-
-template <typename T>
-
-void List<T>::display()
-{
-    Node<T>* curr;
-    
-    for (curr = head; curr !=0; curr = curr->next)
-    {
-        cout << curr->data;
-    }
-}
-
-template <typename T>
-
-//If position is out of range, nothing is changed.
-void List<T>::elementSwap(int pos)
-{
-    if(this->head == 0)
-    {
-        //No swap occured.
-        cout << "No swap was made because invalid position "; 
-        cout << pos << " was passed." << endl;
-        return;
-    }
-    
-    int posCount = -1;
-    Node<T>* pos1Node = 0;
-    Node<T>* posN1Node = 0;
-    Node<T>* tempPrevious = 0;
-    
-    //If the next element is 0, then return original list w/o swap
-    for (Node<T>* curr = this->head; curr->next !=0; curr = curr->next)
-    {
-        posCount++;
-        
-        //Previous node
-        if(posCount == pos - 1)
-            tempPrevious = curr;
-            
-        if(posCount == pos)
-        {
-            pos1Node = curr;
-            posN1Node = curr->next;
-            Node<T>* temp = posN1Node->next;
-            
-            if(pos1Node == head)
-            {
-                pos1Node->next = temp;
-                posN1Node->next = pos1Node;
-                
-                head = posN1Node;
-                
-                return;
-            }
-            if(posN1Node == tail)
-            {
-                pos1Node->next = temp;
-                posN1Node->next = pos1Node;
-                tempPrevious->next = posN1Node;
-                
-                tail = pos1Node;
-                
-                return;
-            }
-            
-            //Swaps occuring inside not head or tail.
-            pos1Node->next = temp;
-            posN1Node->next = pos1Node;
-            tempPrevious->next = posN1Node;
-            
-            return;
-        }
-        
-    }
-    
-    //No swap occured.
-    cout << "No swap was made because invalid position "; 
-    cout << pos << " was passed." << endl;
-  
-    return;
-}
-
 
 int primeCount(forward_list<int> lst)
 {
@@ -289,26 +57,9 @@ int primeCount(forward_list<int> lst)
     return 0 + primeCount(lst);
 }
 
-bool isPrime(int i)
-{
-    //These values never prime.
-    if(i <= 0)
-        return false;
-        
-    //Basic single digit prime numbers
-    if(i == 2 || i == 3 || i == 5 || i == 7)
-        return true;
-    
-    //Checks if remainder by modding i with the single digit primes
-    if(i % 2 != 0 && i % 3 != 0 && i % 5 != 0 && i % 7 != 0)
-        return true;
-    return false;
-}
-
 template <typename T>
 
 //Rule: Traverse L once. Copy L into P in reverse order.
-//NEEDS WORK
 void listCopy(forward_list<T> L, forward_list<T> &P)
 {
     //If L is empty or both are, nothing to do. 
