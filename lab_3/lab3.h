@@ -356,7 +356,7 @@ class TwoStackOptimal
             return;
         }
 };
-/*
+
 template <typename T>
 
 //A B C are source aux and destination stacks.
@@ -414,6 +414,5 @@ void showTowerStates(int n, stack<T> &A, stack<T> &B, stack <T>&C)
         }
     }
     
-    showTowerStates(int n, A, B, C);
+    showTowerStates(n, A, B, C);
 }
-*/
