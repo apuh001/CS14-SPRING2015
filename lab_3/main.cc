@@ -15,7 +15,12 @@
 //  ================== END ASSESSMENT HEADER ===============
 
 #include <iostream>
+#include "lab3.h"
 
 using namespace std;
 
-//int main(int argc, char* argv[])
+int main()
+{
+    
+    return 0;
+}
