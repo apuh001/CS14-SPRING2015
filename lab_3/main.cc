@@ -21,6 +21,14 @@ using namespace std;
 
 int main()
 {
+    TwoStackFixed<int>test(4, 1); //4 slots, equally distrib index 0,1 goes to 
+                              //stack 1, index 2, 3 goes to stack 2
+    cout << "Stack1 is empty? " << test.isEmptyStack1() << endl;
+    cout << "Stack2 is empty? " << test.isEmptyStack2()<< endl;
+    cout << "Stack1 is Full? " << test.isFullStack1()<< endl;
+    cout << "Stack2 is Full? " <<  test.isFullStack2()<< endl;
+   
     
+        
     return 0;
 }
