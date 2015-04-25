@@ -14,10 +14,11 @@
 ///     TA: Mandar
 //  ================== END ASSESSMENT HEADER ===============
 
-using namespace std;
-
 #include <stack>
 #include <iostream>
+#include <cassert>
+
+using namespace std;
 
 template <typename T>
 
@@ -25,7 +26,7 @@ class TwoStackFixed
 {
     private:
         T* arr;
-        int sz; //Stores size of array.
+        int size; //Stores size of array.
         
         //Stores partition of s1 an s2's current top and max sizes.
         int s1curr, s2curr, s1max, s2max; 
@@ -38,7 +39,7 @@ class TwoStackFixed
             
             if(size == 0)
             {
-                arr = new T[0]
+                arr = new T[0];
                 return;
             }
             
@@ -62,21 +63,20 @@ class TwoStackFixed
             //If neither Stack1 nor Stack2 dominates entire array.
             else
             {
-                
                 s1max = maxtop; //Max position for s1
                 //Remember, s2's first elements starts at size - 1
-                s2max = 1 + maxtop //Max position for s2 is whatever is left.
+                s2max = 1 + maxtop; //Max position for s2 is whatever is left.
                 s1curr = 0;
             }
             
-            sz = size;
+            this->size = size;
             arr = new T[size];
-            
-            
         }
         
         void pushStack1(T value)
         {
+            assert(size > 0);
+            
             //If already full or has no space or program terminates.
             //Also if nonexistant, then terminates.
             assert(s1max > 0);
@@ -90,6 +90,7 @@ class TwoStackFixed
         
         void pushStack2(T value)
         {
+            assert(size > 0);
             //If already full or has no space or program terminates.
             //Also if nonexistant, then terminates.
             //Be careful, since s2curr must be a HIGHER index, it must be
@@ -107,24 +108,26 @@ class TwoStackFixed
         
         T popStack1()
         {
+            assert(size > 0);
             //Asserts stack1 exists and or is not empty
             assert(!isEmptyStack1());
             
             T temp(arr[s1curr]);
             s1curr--;
             
-            return T;
+            return temp;
         }
         
         T popStack2()
         {
+            assert(size > 0);
             //Asserts stack2 exists and or is not empty
             assert(!isEmptyStack2());
             
             T temp(arr[s2curr]);
             s2curr++;
             
-            return T;
+            return temp;
         }
         
         //Nonexistant stacks will return false;
@@ -158,7 +161,7 @@ class TwoStackFixed
                 return;
             //Nonexistant stack1
             //Just prints whitespace if any followed by s2's entries
-            if(s1curr == -2;)
+            if(s1curr == -2)
             {
                 for(int i = 0; i < size; i++)
                 {
@@ -174,7 +177,7 @@ class TwoStackFixed
             }
             //Nonexistant stack2
             //Just prints whitespace if any followed by s1's entries
-            if(s2curr == size;)
+            if(s2curr == size)
             {
                 for(int i = 0; i < size; i++)
                 {
@@ -228,7 +231,7 @@ class TwoStackOptimal
             assert(maxIndex != s1curr);
             assert(maxIndex != s2curr);
             
-            T[s1curr++] = value;
+            arr[s1curr++] = value;
             
             if(s1curr + 1 == s2curr)
                 maxIndex == s1curr;
@@ -242,7 +245,7 @@ class TwoStackOptimal
             assert(maxIndex != s1curr);
             assert(maxIndex != s2curr);
             
-            T[s2curr--] = value;
+            arr[s2curr--] = value;
             
             if(s2curr - 1 == s1curr)
                 maxIndex == s2curr;
@@ -353,12 +356,64 @@ class TwoStackOptimal
             return;
         }
 };
-
+/*
 template <typename T>
 
 //A B C are source aux and destination stacks.
 //Output should have format: Moved [VALUE] from peg A to B
 void showTowerStates(int n, stack<T> &A, stack<T> &B, stack <T>&C)
 {
+    if(A.empty() && B.empty())
+        return;
     
+    if(!A.empty())
+    {
+        if(C.empty() || A.top() < C.top())
+        {
+            cout << "Moved " << A.top() << " from peg A to C";
+            C.push(A.top());
+            A.pop();
+        }
+        else if(B.empty() || A.top() < B.top())
+        {
+            cout << "Moved " << A.top() << " from peg A to B";
+            B.push(A.top());
+            A.pop();
+        }
+    }
+    
+    if(!B.empty())
+    {
+        if(C.empty() || B.top() < C.top())
+        {
+            cout << "Moved " << B.top() << " from peg A to C";
+            C.push(B.top());
+            B.pop();
+        }
+        else if(A.empty() || A.top() > B.top)
+        {
+            cout << "Moved " << B.top() << " from peg B to A";
+            A.push(B.top());
+            B.pop();
+        }
+    }
+    
+    if(!C.empty())
+    {
+        if((B.empty() && A.top() > C.top()) || (A.top() > B.top() && A.top() > C.top()))
+        {
+            cout << "Moved " << A.top() << " from peg A to C";
+            C.push(A.top());
+            A.pop();
+        }
+        if(A.empty() && B.top > C.top || (B.top() > A.top() && B.top() > C.top()))
+        {
+            cout << "Moved " << B.top() << " from peg B to C";
+            C.push(B.top());
+            B.pop();
+        }
+    }
+    
+    showTowerStates(int n, A, B, C);
 }
+*/
