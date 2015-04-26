@@ -35,13 +35,7 @@ class TwoStackFixed
         //Initializes stacks.
         TwoStackFixed(int size, int maxtop)
         {
-            assert(size >= 0);
-            
-            if(size == 0)
-            {
-                arr = new T[0];
-                return;
-            }
+            assert(size > 0);
             
             //If maxtop > n - 1 then s1 has entire array.
             //Position -1 signifies before first element initialized.
@@ -49,13 +43,14 @@ class TwoStackFixed
             if (maxtop < 0)
             {
                 s1curr = -2; //Signifies nonexistant Stack1
-                s1max = maxtop;
+                s1max = -1;
                 s2max = 0;
                 s2curr = size; //Signifies Stack2 is curr at one after end.
             }
+            //Stack1 dominates entire array
             else if(maxtop >= size - 1)
             {
-                s1curr = -1; //Signifies Stack1 curr is one before end.
+                s1curr = -1; //Signifies Stack1 curr is one before beginning.
                 s1max = size - 1;
                 s2max = size;
                 s2curr = size + 1; //Signifies Stack2 is nonexistant
@@ -63,10 +58,12 @@ class TwoStackFixed
             //If neither Stack1 nor Stack2 dominates entire array.
             else
             {
-                s1max = maxtop; //Max position for s1
+                //Max position for s1
                 //Remember, s2's first elements starts at size - 1
+                s1max = maxtop; 
                 s2max = 1 + maxtop; //Max position for s2 is whatever is left.
-                s1curr = 0;
+                s1curr = -1;
+                s2curr = size;
             }
             
             this->size = size;
@@ -75,8 +72,6 @@ class TwoStackFixed
         
         void pushStack1(T value)
         {
-            assert(size > 0);
-            
             //If already full or has no space or program terminates.
             //Also if nonexistant, then terminates.
             assert(s1max > 0);
@@ -90,7 +85,6 @@ class TwoStackFixed
         
         void pushStack2(T value)
         {
-            assert(size > 0);
             //If already full or has no space or program terminates.
             //Also if nonexistant, then terminates.
             //Be careful, since s2curr must be a HIGHER index, it must be
@@ -101,14 +95,13 @@ class TwoStackFixed
             //Careful again! s2curr must move DOWN the array to be pushed
             //to the next available spot!
             s2curr--;
-            arr[s1curr] = value;
+            arr[s2curr] = value;
             display();
             return;
         }
         
         T popStack1()
         {
-            assert(size > 0);
             //Asserts stack1 exists and or is not empty
             assert(!isEmptyStack1());
             
@@ -120,7 +113,6 @@ class TwoStackFixed
         
         T popStack2()
         {
-            assert(size > 0);
             //Asserts stack2 exists and or is not empty
             assert(!isEmptyStack2());
             
@@ -145,7 +137,7 @@ class TwoStackFixed
         //Counts also for nonexistant stacks.
         bool isEmptyStack1()
         {
-            return (s1curr <= 0) ? true : false;
+            return (s1curr < 0) ? true : false;
         }
         
         //Counts also for nonexistant stacks.
@@ -159,6 +151,7 @@ class TwoStackFixed
         {
             if(size == 0)
                 return;
+                
             //Nonexistant stack1
             //Just prints whitespace if any followed by s2's entries
             if(s1curr == -2)
@@ -231,11 +224,12 @@ class TwoStackOptimal
             assert(maxIndex != s1curr);
             assert(maxIndex != s2curr);
             
-            arr[s1curr++] = value;
+            s1curr++;
+            arr[s1curr] = value;
             
             if(s1curr + 1 == s2curr)
-                maxIndex == s1curr;
-                
+                maxIndex = s1curr;
+            display();
             return;
         }
         
@@ -245,11 +239,12 @@ class TwoStackOptimal
             assert(maxIndex != s1curr);
             assert(maxIndex != s2curr);
             
-            arr[s2curr--] = value;
+            s2curr--;
+            arr[s2curr] = value;
             
             if(s2curr - 1 == s1curr)
-                maxIndex == s2curr;
-                
+                maxIndex = s2curr;
+            display();  
             return;
         }
         
@@ -283,14 +278,14 @@ class TwoStackOptimal
         
         bool isFullStack1()
         {
-            if(maxIndex == s1curr || maxIndex == s1curr)
+            if(maxIndex == s1curr || maxIndex == s2curr)
                 return true;
             return false;
         }
         
         bool isFullStack2()
         {
-            if(maxIndex == s1curr || maxIndex == s1curr)
+            if(maxIndex == s1curr || maxIndex == s2curr)
                 return true;
             return false;
         }
@@ -327,7 +322,7 @@ class TwoStackOptimal
                 int i = 0;
                 for(; i <= s1curr; i++)
                     cout << arr[i] << " ";
-                for(i+1; i < size; i++)
+                for(i++; i < size; i++)
                     cout << "  ";
                 cout << endl;
             }
