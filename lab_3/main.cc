@@ -15,6 +15,7 @@
 //  ================== END ASSESSMENT HEADER ===============
 
 #include <iostream>
+#include <stack>
 #include "lab3.h"
 
 using namespace std;
@@ -187,6 +188,19 @@ int main()
     cout << "Stack2 is empty? " << stacks.isEmptyStack2()<< endl;
     cout << "Stack1 is Full? " << stacks.isFullStack1()<< endl;
     cout << "Stack2 is Full? " <<  stacks.isFullStack2() << endl << endl;
+    
+    cout << "=======================" << endl;
+    cout << "Tower of Hanoi tests" << endl;
+    cout << "=======================" << endl;
+    
+    stack<int> A;
+    stack<int> B;
+    stack<int> C;
+    A.push(3);
+    A.push(2);
+    A.push(1);
+    
+    showTowerStates(A.size(), A, B, C);
     
     return 0;
 }
