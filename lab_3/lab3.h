@@ -354,60 +354,26 @@ class TwoStackOptimal
 
 template <typename T>
 
+//Helper
+void showTowerStates_(int n, stack<T> &A, stack<T> &B, stack <T>&C, 
+char src = ' ', char aux = ' ', char dest = ' ')
+{
+    if(n > 0)
+    {
+        showTowerStates_(n - 1, A, C, B, src, dest, aux);
+        cout << "Moved " << A.top() << " from " << src <<" to "<< dest << endl;
+        C.push(A.top());
+        A.pop();
+        showTowerStates_(n - 1, B, A, C, aux, src, dest);
+    }
+}
+
+template <typename T>
+
 //A B C are source aux and destination stacks.
 //Output should have format: Moved [VALUE] from peg A to B
 void showTowerStates(int n, stack<T> &A, stack<T> &B, stack <T>&C)
 {
-    if(A.empty() && B.empty())
-        return;
-    
-    if(!A.empty())
-    {
-        if(C.empty() || A.top() < C.top())
-        {
-            cout << "Moved " << A.top() << " from peg A to C";
-            C.push(A.top());
-            A.pop();
-        }
-        else if(B.empty() || A.top() < B.top())
-        {
-            cout << "Moved " << A.top() << " from peg A to B";
-            B.push(A.top());
-            A.pop();
-        }
-    }
-    
-    if(!B.empty())
-    {
-        if(C.empty() || B.top() < C.top())
-        {
-            cout << "Moved " << B.top() << " from peg A to C";
-            C.push(B.top());
-            B.pop();
-        }
-        else if(A.empty() || A.top() > B.top)
-        {
-            cout << "Moved " << B.top() << " from peg B to A";
-            A.push(B.top());
-            B.pop();
-        }
-    }
-    
-    if(!C.empty())
-    {
-        if((B.empty() && A.top() > C.top()) || (A.top() > B.top() && A.top() > C.top()))
-        {
-            cout << "Moved " << A.top() << " from peg A to C";
-            C.push(A.top());
-            A.pop();
-        }
-        if(A.empty() && B.top > C.top || (B.top() > A.top() && B.top() > C.top()))
-        {
-            cout << "Moved " << B.top() << " from peg B to C";
-            C.push(B.top());
-            B.pop();
-        }
-    }
-    
-    showTowerStates(n, A, B, C);
+    showTowerStates_(n, A, B, C, 'A', 'B', 'C');
 }
+    
