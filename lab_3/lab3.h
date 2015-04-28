@@ -361,7 +361,7 @@ char src = ' ', char aux = ' ', char dest = ' ')
     if(n > 0)
     {
         showTowerStates_(n - 1, A, C, B, src, dest, aux);
-        cout << "Moved " << A.top() << " from " << src <<" to "<< dest << endl;
+        cout << "Moved " << A.top() << " from peg " << src <<" to "<< dest << endl;
         C.push(A.top());
         A.pop();
         showTowerStates_(n - 1, B, A, C, aux, src, dest);
