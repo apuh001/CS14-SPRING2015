@@ -15,6 +15,9 @@
 //  ================== END ASSESSMENT HEADER ===============
 
 #include <iostream>
+#include <queue>
+#include <tuple>
+
 using namespace std;
 /*
 class CoprimeNode
@@ -59,4 +62,35 @@ void list_postorder(int m, int n, int k)
     list_postorder(m+(2*n), n, k);
      
     cout << m << " " << n << endl;
+}
+
+void obtain_store_vals(int m, int n, int k, priority_queue<pair<int, int>, 
+vector<pair<int, int>>, greater<pair<int, int>>> &ordered)
+{
+    if(m + n >= k)
+        return;
+    pair<int, int> aPair(m, n);
+    ordered.push(aPair);
+    obtain_store_vals((2*m)-n, m, k, ordered); 
+    obtain_store_vals((2*m)+n, m, k, ordered);
+    obtain_store_vals(m+(2*n), n, k, ordered);
+}
+
+//Uses a priority queue to sort
+void list_sortedorder(int m1, int m2, int n, int k)
+{
+   priority_queue<pair<int, int>, vector<pair<int, int>>, 
+   greater<pair<int, int>>> allVals;
+   
+   obtain_store_vals(m1, n, k, allVals);
+   obtain_store_vals(m2, n, k, allVals);
+ 
+   while(!allVals.empty())
+   {
+       cout << get<0>(allVals.top());
+       cout << " " << get<1>(allVals.top()) << endl;
+       allVals.pop();
+   }
+  
+   return;
 }
