@@ -27,5 +27,8 @@ int main()
     cout << "postorder" << endl;
     
     list_postorder(2, 1, 9);
-    //list_postorder(3, 1, 9);
+    list_postorder(3, 1, 9);
+    
+    cout << "sorted" << endl;
+    list_sortedorder(2, 3, 1, 9);
 }
