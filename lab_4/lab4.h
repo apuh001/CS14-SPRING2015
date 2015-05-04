@@ -52,8 +52,14 @@ void list_postorder(int m, int n, int k)
 struct pair_comp_greater{
     bool operator() (const pair<int, int> &first, 
     const pair<int, int> &second) const
-    {return (get<0>(first) + get<1>(first)) > 
-    (get<0>(second) + get<1>(second));}
+    {
+        //If sums identical, then look at the first vals
+        if((get<0>(first) + get<1>(first)) == 
+            (get<0>(second) + get<1>(second)))
+            return ((get<0>(first) > get<0>(second)));
+        return ((get<0>(first) + get<1>(first)) > 
+                (get<0>(second) + get<1>(second)));
+    }
 };
 
 void obtain_store_vals(int m, int n, int k, priority_queue<pair<int, int>, 
