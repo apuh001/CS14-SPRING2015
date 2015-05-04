@@ -19,21 +19,6 @@
 #include <tuple>
 
 using namespace std;
-/*
-class CoprimeNode
-{
-    public:
-        int mVal;
-        int nVal;
-        CoprimeNode* child1; 
-        CoprimeNode* child2; 
-        CoprimeNode* child3; 
-        //CoprimeNode()
-        void list_preorder();
-        void list_postorder();
-        
-}
-*/
 
 void list_preorder(int m, int n, int k)
 {
@@ -64,8 +49,15 @@ void list_postorder(int m, int n, int k)
     cout << m << " " << n << endl;
 }
 
+struct pair_comp_greater{
+    bool operator() (const pair<int, int> &first, 
+    const pair<int, int> &second) const
+    {return (get<0>(first) + get<1>(first)) > 
+    (get<0>(second) + get<1>(second));}
+};
+
 void obtain_store_vals(int m, int n, int k, priority_queue<pair<int, int>, 
-vector<pair<int, int>>, greater<pair<int, int>>> &ordered)
+vector<pair<int, int>>, pair_comp_greater> &ordered)
 {
     if(m + n >= k)
         return;
@@ -79,8 +71,11 @@ vector<pair<int, int>>, greater<pair<int, int>>> &ordered)
 //Uses a priority queue to sort
 void list_sortedorder(int m1, int m2, int n, int k)
 {
+   //priority_queue<pair<int, int>, vector<pair<int, int>>, 
+   //greater<pair<int, int>>> allVals;
+   
    priority_queue<pair<int, int>, vector<pair<int, int>>, 
-   greater<pair<int, int>>> allVals;
+   pair_comp_greater> allVals;
    
    obtain_store_vals(m1, n, k, allVals);
    obtain_store_vals(m2, n, k, allVals);
