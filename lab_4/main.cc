@@ -20,12 +20,10 @@ using namespace std;
 int main()
 {
     cout << "preorder" << endl;
-    
     list_preorder(2, 1, 9);
     list_preorder(3, 1, 9);
     
     cout << "postorder" << endl;
-    
     list_postorder(2, 1, 9);
     list_postorder(3, 1, 9);
     
