@@ -28,8 +28,9 @@ int main()
     myBST.insert(40);
     myBST.insert(70);
     myBST.insert(35);
-
-    //myBST.minCover();
+    myBST.insert(45);
+    
+    myBST.minCover();
     int strr[100];
     myBST.findSumPath(myBST.root, 80, strr);
     map<int, int> aMap;
