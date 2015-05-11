@@ -193,7 +193,7 @@ class BST{
         if(n->isLeaf() && n->selected)
         {
             count++;
-            cout << n->value << endl;
+            cout << n->value << " ";
             return;
         }
         
@@ -202,27 +202,37 @@ class BST{
         if(n->selected)
         {
             count++;
-            cout << n->value << endl;
+            cout << n->value << " ";
         }
             
         displayMinCover_(n->right,count);
     }
     
-    void minCover_(Node* n, bool selectAsCover = true)
+    void minCover_(Node* n, bool selectAsCover)
     {
-        //Root will never be passed in.
-        if(n->isLeaf() || n == nil)
+        //Root will never be passed in directly.
+        if(n == nil)
+            return;
+        if(n->isLeaf())
             return;
         
         //requirement regardless if selectAsCover is true or false
-        if(n->left != nil && n->left->isLeaf())
-            n->selected = true;
-        if(n->right != nil && n->right->isLeaf())
-            n->selected = true;
+        if(n->left != nil)
+        {
+            assert(n->left != nil);
+            if(n->left->isLeaf())
+                n->selected = true;
+        }
+        if(n->right != nil)
+        {
+            assert(n->right != nil);
+            if(n->right->isLeaf())
+                n->selected = true;
+        }
         
         //If the above steps were not done check to see if it is a cover node 
         //or not
-        if(!n->selected)
+        if(!(n->selected))
         {
             if(selectAsCover)
                 n->selected = true;
@@ -230,8 +240,10 @@ class BST{
         
         //Flips select
         selectAsCover = !selectAsCover;
-        minCover_(n->right, selectAsCover);
-        minCover_(n->left, selectAsCover);
+            minCover_(n->right, selectAsCover);
+            minCover_(n->left, selectAsCover);
+        
+        return;
     }
     
     //Use with findSumePath
@@ -314,16 +326,17 @@ class BST{
         {
             if(m.find(hd) != m.end())
             {
-                m[hd] = n->value;
+                m[hd]+=n->value;
             }
             else
-                m[hd]+=n->value;
+                m[hd] = n->value;
                 
             return;
         }
         
         vertSum_(n->left, hd - 1, m);
         vertSum_(n->right, hd + 1, m);
+        m[hd]+=n->value;
         
         return;
     }
@@ -344,8 +357,7 @@ class BST{
     public:
     
         Node* root;
-         
-         
+        
         void vertSum(Node* node, int hd, map<int, int>& m)
         {
             cout << "Part 3" << endl;
@@ -354,13 +366,13 @@ class BST{
             else
             {
                 vertSum_(node->left, hd - 1, m);
-                vertSum_(node->right, hd + 1, m);       
+                vertSum_(node->right, hd + 1, m); 
+                //Be sure to add calling root's value
+                m[hd]+=node->value;
             }
             
             printVertSum(m);
         }
-        
-        
         
         void findSumPath(Node* n, int sum, int buffer[])
         {
@@ -401,6 +413,8 @@ class BST{
                 return;
             minCover_(root->right, true);
             minCover_(root->left, true);
+            
+            displayMinCover();
             return;
         }
         
@@ -416,7 +430,7 @@ class BST{
         
             displayMinCover_(root->left, coverCount);
             displayMinCover_(root->right, coverCount);
-            
+            cout << endl;
             cout << coverCount << endl;
             
             return;
