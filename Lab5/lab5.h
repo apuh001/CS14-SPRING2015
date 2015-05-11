@@ -234,9 +234,109 @@ class BST{
         minCover_(n->left, select);
     }
     
+    //Use with findSumePath
+    void printBuffer(int sum, int buffer[])
+    {
+        for(unsigned i = 0; sum > 0; i++)
+        {
+            cout << buffer[i] << endl;
+            sum-=buffer[i];
+        }
+        return;
+    }
+    
+    //Helper! Use with findSumPath
+    void fillStartingFrom(Node* n, int &copySum, int sum, int &buffer[]){
+        if(n == nil)
+            return;
+        
+        //First check left side if initially starting at node n doesn't
+        //yield intended result. If left doesn't work result the value and
+        //check the right side. Whatever happens will return and originally
+        //calling function will handle the rest.
+        fillBuffer(n->left, copySum, sum, buffer);
+        if(copySum != sum)
+            copySum = 0;
+        fillBuffer(n->right, copySum, sum, buffer);
+        
+        return;
+    }
+    
+    //Helper! Use with findSumPath
+    void fillBuffer(Node* n, int &currSum, int origSum, int &buffer[], 
+    int &bufferIndex = 0)
+    {
+        //If sum is equal or larger, returns. It'll be checked
+        if(currSum >= origSum || n == nil)
+            return;
+            
+        if(currSum + n->value <= origSum)
+        {
+            buffer[bufferIndex] = n->value;
+            bufferIndex++;
+            currSum+=n->value;
+            //We are done
+            if(currSum == origSum)
+                return;
+            //Otherwise go on
+        }
+        
+        int currIndex = bufferIndex;
+        int tempCurrSum = currSum;
+        
+        //Check left
+        fillBuffer(n->left, currSum, origSum, buffer, bufferIndex);
+        //Restore value if its greater. Instead, we'll check right
+        if(currSum > origSum)
+        {
+            bufferIndex = currIndex;
+            currSum = tempCurrSum;
+        }
+        else if(currSum < origSum)
+        {
+            //Check right
+            fillBuffer(n->left, currSum, origSum, buffer, bufferIndex);
+        }
+        
+        return;
+    }
     ///////END OF PRIVATE HELPER FUNCS////////////
     
+    
+    
     public:
+        void vertSum(Node* node, int hd, map<int, int>& m)
+        {
+            
+        }
+        
+        
+        
+        void findSumPath(Node* n, int sum, int buffer[])
+        {
+            if(n == nil)
+            {
+                cout << "0" <<  endl;
+                return;
+            }
+            
+            int copySum = 0;
+            fillBuffer(n, copySum, sum, buffer);
+            
+            //Reset
+            if(copySum != sum)
+            {
+                copySum = 0;
+                fillStartingFrom(n, copySum, sum, buffer);
+            }
+            
+            //No existing path
+            if(copySum != sum)
+                cout << "0" <<  endl;
+            else
+                printBuffer(sum, buffer);
+        }
+        
         void minCover()
         {
             //No possible cover
