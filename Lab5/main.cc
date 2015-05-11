@@ -14,7 +14,8 @@
 ///     TA: Mandar
 //  ================== END ASSESSMENT HEADER ===============
 
-#include "bst.h"
+#include <map>
+#include "lab5.h"
 using namespace std;
 
 int main()
@@ -28,5 +29,11 @@ int main()
     myBST.insert(70);
     myBST.insert(35);
 
+    //myBST.minCover();
+    int strr[100];
+    myBST.findSumPath(myBST.root, 80, strr);
+    map<int, int> aMap;
+    myBST.vertSum(myBST.root, 0, aMap);
+    
     return 0;
 }
