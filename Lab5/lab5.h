@@ -41,10 +41,10 @@ class BST{
     class Node{
         public:
             Value value;
-            bool selected;
+            bool selected = false;
             Node* left;
             Node* right;
-            Node(const Value v = Value()) : value(v), selected(false), 
+            Node(const Value v = Value()) : value(v), 
                                             left(nil), right(nil){}
             Value& content(){return value;}
             bool isInternal(){return left != nil && right != nil;}
@@ -101,7 +101,7 @@ class BST{
     
     //const Node* nil; //later nil will point to a sentinel value
     int count;
-    Node* root;
+   
     
     
     ///////// PRIVATE HELPER FUNCS ////////////
@@ -215,9 +215,9 @@ class BST{
             return;
         
         //requirement regardless if selectAsCover is true or false
-        if(n->left != nil && n->left->isleaf())
+        if(n->left != nil && n->left->isLeaf())
             n->selected = true;
-        if(n->right != nil && n->right->isleaf())
+        if(n->right != nil && n->right->isLeaf())
             n->selected = true;
         
         //If the above steps were not done check to see if it is a cover node 
@@ -225,28 +225,33 @@ class BST{
         if(!n->selected)
         {
             if(selectAsCover)
-                n->selected
+                n->selected = true;
         }
         
         //Flips select
-        select = !select;
-        minCover_(n->right, select);
-        minCover_(n->left, select);
+        selectAsCover = !selectAsCover;
+        minCover_(n->right, selectAsCover);
+        minCover_(n->left, selectAsCover);
     }
     
     //Use with findSumePath
     void printBuffer(int sum, int buffer[])
     {
-        for(unsigned i = 0; sum > 0; i++)
-        {
-            cout << buffer[i] << endl;
+        int i = 0;
+        for(; sum > 0; i++)
             sum-=buffer[i];
-        }
+        
+        i--;
+        
+        for(; i >= 0; i--)
+            cout << buffer[i] << " ";
+        
         return;
     }
     
     //Helper! Use with findSumPath
-    void fillStartingFrom(Node* n, int &copySum, int sum, int &buffer[]){
+    void fillStartingFrom(Node* n, int &copySum, int sum, int buffer[],
+    int &bufferIndex){
         if(n == nil)
             return;
         
@@ -254,17 +259,17 @@ class BST{
         //yield intended result. If left doesn't work result the value and
         //check the right side. Whatever happens will return and originally
         //calling function will handle the rest.
-        fillBuffer(n->left, copySum, sum, buffer);
+        fillBuffer(n->left, copySum, sum, buffer, bufferIndex);
         if(copySum != sum)
             copySum = 0;
-        fillBuffer(n->right, copySum, sum, buffer);
+        fillBuffer(n->right, copySum, sum, buffer, bufferIndex);
         
         return;
     }
     
     //Helper! Use with findSumPath
-    void fillBuffer(Node* n, int &currSum, int origSum, int &buffer[], 
-    int &bufferIndex = 0)
+    void fillBuffer(Node* n, int &currSum, int origSum, int buffer[], 
+    int &bufferIndex)
     {
         //If sum is equal or larger, returns. It'll be checked
         if(currSum >= origSum || n == nil)
@@ -300,20 +305,66 @@ class BST{
         
         return;
     }
+    
+    void vertSum_(Node* n, int hd, map<int, int>& m)
+    {
+        if(n == nil)
+            return;
+        if(n->isLeaf())
+        {
+            if(m.find(hd) != m.end())
+            {
+                m[hd] = n->value;
+            }
+            else
+                m[hd]+=n->value;
+                
+            return;
+        }
+        
+        vertSum_(n->left, hd - 1, m);
+        vertSum_(n->right, hd + 1, m);
+        
+        return;
+    }
+    
+    void printVertSum(map<int, int>& m)
+    {
+        //Empty? Do nothing
+        if(m.empty())
+            return;
+        //Print through map
+        for(auto it = m.begin(); it != m.end(); it++)
+            cout << it->second << " ";
+        cout << endl;
+    }
     ///////END OF PRIVATE HELPER FUNCS////////////
     
     
-    
     public:
+    
+        Node* root;
+         
+         
         void vertSum(Node* node, int hd, map<int, int>& m)
         {
+            cout << "Part 3" << endl;
+            if(node == nil)
+                return;
+            else
+            {
+                vertSum_(node->left, hd - 1, m);
+                vertSum_(node->right, hd + 1, m);       
+            }
             
+            printVertSum(m);
         }
         
         
         
         void findSumPath(Node* n, int sum, int buffer[])
         {
+            cout << "Part 2" << endl;
             if(n == nil)
             {
                 cout << "0" <<  endl;
@@ -321,26 +372,32 @@ class BST{
             }
             
             int copySum = 0;
-            fillBuffer(n, copySum, sum, buffer);
+            int bufferIndex = 0;
+            fillBuffer(n, copySum, sum, buffer, bufferIndex);
             
             //Reset
             if(copySum != sum)
             {
                 copySum = 0;
-                fillStartingFrom(n, copySum, sum, buffer);
+                bufferIndex = 0;
+                fillStartingFrom(n, copySum, sum, buffer, bufferIndex);
             }
             
             //No existing path
             if(copySum != sum)
                 cout << "0" <<  endl;
             else
+            {
                 printBuffer(sum, buffer);
+                cout << endl;
+            }
         }
         
         void minCover()
         {
+            cout << "Part 1" << endl;
             //No possible cover
-            if(root = nil || root->isLeaf())
+            if(root == nil || root->isLeaf())
                 return;
             minCover_(root->right, true);
             minCover_(root->left, true);
