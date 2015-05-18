@@ -1,0 +1,23 @@
+//  =============== BEGIN ASSESSMENT HEADER ================
+/// @file Lab6/README
+/// @brief Lab 6 Spring 2015
+///
+/// @author Alexander Puh [apuh001@ucr.edu]
+/// @date 5/17/2015
+/// @SID: 861162817
+///
+/// @par Enrollment Notes 
+///     Lecture Section: 001
+/// @par
+///     Lab Section: 022
+/// @par
+///     TA: Mandar
+//  ================== END ASSESSMENT HEADER ===============
+
+part a. My selection sort is stable because NO swaps are made when the same     
+        equal elements are compared so they keep their same relative ordering.
+        As per my tests you can see that the sort remains in the same relative
+        order after sorting.
+
+part b. For the test program. I used the test cases from the specifications 
+        since they appear to exhibit the stable sort very well.
