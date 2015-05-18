@@ -60,5 +60,28 @@ int main(){
         
     selectionsort(aList2);
     
+    /*
+    cout << endl;
+    cout << "Test for stability: " << endl;
+    //TEST for stability
+    vector<int> stableTest{4, 4, 1, 5, 6};
+    cout << "This is the contents of our vec of elements in question:\n";
+    for(unsigned i = 0; i < stableTest.size(); i++)
+        cout << stableTest[i] << " ";
+    cout << "\nThese are their corresponding addresses!" << endl;
+    for(unsigned i = 0; i < stableTest.size(); i++)
+    {
+        cout << &(stableTest[i]) << " ";
+    }
+    cout << endl;
+    selectionsort(stableTest);
+    cout << "Look at the addresses of the 4'";
+    cout << " of the two 4 s" << endl;
+    for(unsigned i = 0; i < stableTest.size(); i++)
+        cout << &(stableTest[i]) << " ";
+    cout << endl;
+    cout << "Thus selectionsort is NOT stable!" << endl;
+    */
+    
     return 0;
 }
