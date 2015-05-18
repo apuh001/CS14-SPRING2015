@@ -14,10 +14,13 @@
 ///     TA: Mandar
 //  ================== END ASSESSMENT HEADER ===============
 
-part a. My selection sort is stable because NO swaps are made when the same     
-        equal elements are compared so they keep their same relative ordering.
-        As per my tests you can see that the sort remains in the same relative
-        order after sorting.
+part a. My selection sort appears to be stable, however selection sort is 
+        supposedly an unstable sort by itself. For example, the values (1, 1)
+        and (1, 1) are changed in their ordering. By tracing the code, we can
+        tell that original (1, 1) has changed places with its second (1,1) when
+        they are compared to other elements in the container.
 
-part b. For the test program. I used the test cases from the specifications 
-        since they appear to exhibit the stable sort very well.
+part b. For the test program. I used the test cases from the specifications.
+        Tracing over them, it appears that the instability is present. We 
+        cannot be 100% sure that the elements of equal value will stay in     
+        the exact same location relative to each other.
