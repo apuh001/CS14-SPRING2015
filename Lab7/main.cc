@@ -1,3 +1,19 @@
+//  =============== BEGIN ASSESSMENT HEADER ================
+/// @file Lab7/main.cc
+/// @brief Lab 7 Spring 2015
+///
+/// @author Alexander Puh [apuh001@ucr.edu]
+/// @date 5/25/2015
+/// @SID: 861162817
+///
+/// @par Enrollment Notes 
+///     Lecture Section: 001
+/// @par
+///     Lab Section: 022
+/// @par
+///     TA: Mandar
+//  ================== END ASSESSMENT HEADER ===============
+
 #include <iostream>
 #include <chrono>   //Use high_resolution_time::now()
 #include <fstream>
