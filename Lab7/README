@@ -1,0 +1,26 @@
+//  =============== BEGIN ASSESSMENT HEADER ================
+/// @file Lab7/README --> contains part b
+/// @brief Lab 7 Spring 2015
+///
+/// @author Alexander Puh [apuh001@ucr.edu]
+/// @date 5/25/2015
+/// @SID: 861162817
+///
+/// @par Enrollment Notes 
+///     Lecture Section: 001
+/// @par
+///     Lab Section: 022
+/// @par
+///     TA: Mandar
+//  ================== END ASSESSMENT HEADER ===============
+
+Part b of lab:
+
+Advantages of hash tables:
+Faster lookups and faster insertion.
+
+Disadvantages of trees:
+Slower lookups and insertions as compared to hash tables as elements grow.
+
+It may be interesting too look at the comparisons of removal times and
+even time it takes to deallocate memory upon destruction.
